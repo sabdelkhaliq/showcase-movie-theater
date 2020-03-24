@@ -1,14 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd">
-    <bean id="userServiceImpl" class="movie.theater.service.UserServiceImpl" >
-        <property name = "users">
-            <map>
-            </map>
+    <!-- DAO -->
+    <bean id="AuditoriumDAOImpl" class="movie.theater.dao.AuditoriumDAOImpl">
+        <property name="auditoriums">
+            <map/>
         </property>
+    </bean>
+    <bean id="EventDAOImpl" class="movie.theater.dao.EventDAOImpl">
+        <property name="events">
+            <map/>
+        </property>
+    </bean>
+    <bean id="UserDAOImpl" class="movie.theater.dao.UserDAOImpl">
+        <property name="users">
+            <map/>
+        </property>
+    </bean>
+
+    <!-- Services -->
+    <bean id="UserServiceImpl" class="movie.theater.service.UserServiceImpl">
+        <property name="userDAO" ref="UserDAOImpl"/>
+    </bean>
+    <bean id="EventServiceImpl" class="movie.theater.service.EventServiceImpl">
+        <property name="eventDAO" ref="EventDAOImpl"/>
+    </bean>
+
+    <bean id="BirthdayStrategy" class="movie.theater.service.discount.strategy.BirthdayStrategy"/>
+
+    <bean id="TenthTicketStrategy" class="movie.theater.service.discount.strategy.TenthTicketStrategy"/>
+
+    <bean id="DiscountServiceImpl" class="movie.theater.service.DiscountServiceImpl">
+        <property name="discountStrategyList">
+            <list>
+                <ref bean="BirthdayStrategy"/>
+                <ref bean="TenthTicketStrategy"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="AuditoriumServiceImpl" class="movie.theater.service.AuditoriumServiceImpl">
+        <property name="auditoriumDAO" ref="AuditoriumDAOImpl"/>
+    </bean>
+
+    <bean id="BookingServiceImpl" class="movie.theater.service.BookingServiceImpl">
+        <property name="userService" ref="UserServiceImpl"/>
+        <property name="discountService" ref="DiscountServiceImpl"/>
     </bean>
 </beans>

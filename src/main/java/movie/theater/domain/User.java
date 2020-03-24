@@ -1,5 +1,6 @@
 package movie.theater.domain;
 
+import java.time.LocalDate;
 import java.util.NavigableSet;
 import java.util.Objects;
 import java.util.TreeSet;
@@ -15,12 +16,15 @@ public class User extends DomainObject {
 
     private String email;
 
+    private LocalDate birthdate;
+
     private NavigableSet<Ticket> tickets = new TreeSet<>();
 
-    public User(String firstName, String lastName, String email, NavigableSet<Ticket> tickets) {
+    public User(String firstName, String lastName, String email, LocalDate birthdate, NavigableSet<Ticket> tickets) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.birthdate = birthdate;
         this.tickets = tickets;
     }
 
@@ -48,6 +52,14 @@ public class User extends DomainObject {
         this.email = email;
     }
 
+    public LocalDate getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(LocalDate birthdate) {
+        this.birthdate = birthdate;
+    }
+
     public NavigableSet<Ticket> getTickets() {
         return tickets;
     }
@@ -57,44 +69,20 @@ public class User extends DomainObject {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(firstName, lastName, email);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(firstName, user.firstName) &&
+                Objects.equals(lastName, user.lastName) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(birthdate, user.birthdate) &&
+                Objects.equals(tickets, user.tickets);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        User other = (User) obj;
-        if (email == null) {
-            if (other.email != null) {
-                return false;
-            }
-        } else if (!email.equals(other.email)) {
-            return false;
-        }
-        if (firstName == null) {
-            if (other.firstName != null) {
-                return false;
-            }
-        } else if (!firstName.equals(other.firstName)) {
-            return false;
-        }
-        if (lastName == null) {
-            if (other.lastName != null) {
-                return false;
-            }
-        } else if (!lastName.equals(other.lastName)) {
-            return false;
-        }
-        return true;
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, email, birthdate, tickets);
     }
 
     @Override
@@ -103,6 +91,7 @@ public class User extends DomainObject {
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
+                ", birthdate=" + birthdate +
                 ", tickets=" + tickets +
                 '}';
     }

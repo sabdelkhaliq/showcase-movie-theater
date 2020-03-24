@@ -1,32 +1,15 @@
 package movie.theater.service;
 
-import java.util.Set;
+import movie.theater.domain.Auditorium;
+import movie.theater.exception.BusinessException;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import java.util.Set;
 
-import movie.theater.domain.Auditorium;
-
-/**
- * @author Yuriy_Tkach
- */
 public interface AuditoriumService {
 
-    /**
-     * Getting all auditoriums from the system
-     *
-     * @return set of all auditoriums
-     */
-    public @Nonnull
-    Set<Auditorium> getAll();
+    public Set<Auditorium> getAll();
 
-    /**
-     * Finding auditorium by name
-     *
-     * @param name Name of the auditorium
-     * @return found auditorium or <code>null</code>
-     */
-    public @Nullable
-    Auditorium getByName(@Nonnull String name);
+    public Auditorium getByName(@Nonnull String name) throws BusinessException;
 
 }

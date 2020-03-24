@@ -1,9 +1,14 @@
 import movie.theater.domain.User;
+import movie.theater.dao.UserDAO;
+import movie.theater.dao.UserDAOImpl;
 import movie.theater.service.UserService;
 import movie.theater.service.UserServiceImpl;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Scanner;
 
@@ -15,14 +20,19 @@ public class Application {
         System.out.println("3 - USER --> GET USER BY ID");
         System.out.println("4 - USER --> ADD/SAVE USER");
         System.out.println("5 - USER --> GET ALL USERS");
+
         System.out.println("6 - EVENT --> GET NEXT EVENTS");
         System.out.println("7 - EVENT --> GET FOR DATE RANGE");
+
         System.out.println("8 - DISCOUNT --> GET DISCOUNT");
+
         System.out.println("9 - BOOKING --> GET TICKETS PRICE");
         System.out.println("10- BOOKING --> BOOK TICKETS");
         System.out.println("11- BOOKING --> GET PURCHASED TICKETS FOR EVENT");
+
         System.out.println("12- AUDITORIUM --> GET ALL");
         System.out.println("13- AUDITORIUM --> GET BY NAME");
+
         System.out.println("14- QUIT");
     }
 
@@ -86,7 +96,6 @@ public class Application {
         } catch (RuntimeException r) {
             return null;
         }
-
     }
 
     private static User getUserByEmail(UserService userService, Scanner input) {
@@ -95,14 +104,17 @@ public class Application {
         return userService.getUserByEmail(email);
     }
 
-    private static void addUser(UserService u, Scanner input) {
+    private static void addUser(UserService userService, Scanner input) {
         System.out.println("Enter first name: ");
-        String firstName = input.nextLine();
+        String firstName = input.next();
         System.out.println("Enter last name: ");
-        String lastName = input.nextLine();
+        String lastName = input.next();
         System.out.println("Enter email: ");
-        String email = input.nextLine();
-        u.save(new User(firstName, lastName, email, null));
+        String email = input.next();
+        System.out.println("Enter birthDate [ex: dd-MM-yyyy]: ");
+        String birthDate = input.next();
+        DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        userService.save(new User(firstName, lastName, email, LocalDate.parse(birthDate, FORMATTER), null));
     }
 
 }
