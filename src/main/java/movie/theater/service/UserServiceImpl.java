@@ -1,50 +1,47 @@
 package movie.theater.service;
 
+import movie.theater.dao.UserDAO;
 import movie.theater.domain.User;
+import movie.theater.exception.BusinessException;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Collection;
 
 public class UserServiceImpl implements UserService {
-    Map<Integer, User> users;
 
-    public UserServiceImpl() {
-    }
+    UserDAO userDAO;
 
-    @Nullable
     @Override
-    public User getUserByEmail(@Nonnull String email) {
-        return users.values().stream().filter(user -> email.equalsIgnoreCase(user.getEmail())).findFirst().orElseThrow(() -> new RuntimeException("email not found"));
+    public User getUserByEmail(@Nonnull String email) throws BusinessException {
+        return userDAO.getUserByEmail(email);
     }
 
     @Override
-    public User save(@Nonnull User user) {
-        return users.put(users.size(), user);
+    public User save(@Nonnull User user) throws BusinessException {
+        return userDAO.save(user);
     }
 
     @Override
-    public void remove(@Nonnull User user) {
-        users.remove(user);
+    public void remove(@Nonnull User user) throws BusinessException {
+        userDAO.remove(user);
     }
 
     @Override
-    public User getById(@Nonnull Long id) {
-        return users.values().stream().filter(user -> id.equals(user.getId())).findFirst().orElseThrow(() -> new RuntimeException("id not found"));
+    public User getById(@Nonnull Long id) throws BusinessException {
+        return userDAO.getById(id);
     }
 
-    @Nonnull
     @Override
     public Collection<User> getAll() {
-        return users.values().stream().collect(Collectors.toCollection(ArrayList::new));
+        return userDAO.getAll();
+
     }
 
-    public Map<Integer, User> getUsers() {
-        return users;
+    public UserDAO getUserDAO() {
+        return userDAO;
     }
 
-    public void setUsers(Map<Integer, User> users) {
-        this.users = users;
+    public void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 }

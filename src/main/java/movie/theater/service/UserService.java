@@ -1,22 +1,23 @@
 package movie.theater.service;
 
+import movie.theater.domain.User;
+import movie.theater.exception.BusinessException;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
-import movie.theater.domain.User;
+public interface UserService {
 
-/**
- * @author Yuriy_Tkach
- */
-public interface UserService extends AbstractDomainObjectService<User> {
+    public User getUserByEmail(@Nonnull String email) throws BusinessException;
 
-    /**
-     * Finding user by email
-     * 
-     * @param email
-     *            Email of the user
-     * @return found user or <code>null</code>
-     */
-    public @Nullable User getUserByEmail(@Nonnull String email);
+    public User save(@Nonnull User user) throws BusinessException;
 
+    public void remove(@Nonnull User user) throws BusinessException;
+
+    public User getById(@Nonnull Long id) throws BusinessException;
+
+    public Collection<User> getAll();
 }

@@ -1,23 +1,30 @@
 package movie.theater.service;
 
+import movie.theater.dao.AuditoriumDAO;
 import movie.theater.domain.Auditorium;
-import movie.theater.domain.DomainObject;
+import movie.theater.exception.BusinessException;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Set;
 
 public class AuditoriumServiceImpl implements AuditoriumService {
+    AuditoriumDAO auditoriumDAO;
 
-    @Nonnull
     @Override
     public Set<Auditorium> getAll() {
-        return null;
+        return auditoriumDAO.getAll();
     }
 
-    @Nullable
     @Override
-    public Auditorium getByName(@Nonnull String name) {
-        return null;
+    public Auditorium getByName(@Nonnull String name) throws BusinessException {
+        return auditoriumDAO.getByName(name);
+    }
+
+    public AuditoriumDAO getAuditoriumDAO() {
+        return auditoriumDAO;
+    }
+
+    public void setAuditoriumDAO(AuditoriumDAO auditoriumDAO) {
+        this.auditoriumDAO = auditoriumDAO;
     }
 }
