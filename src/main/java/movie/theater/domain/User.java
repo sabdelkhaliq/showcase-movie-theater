@@ -20,7 +20,8 @@ public class User extends DomainObject {
 
     private NavigableSet<Ticket> tickets = new TreeSet<>();
 
-    public User(String firstName, String lastName, String email, LocalDate birthdate, NavigableSet<Ticket> tickets) {
+    public User( String firstName, String lastName, String email, LocalDate birthdate, NavigableSet<Ticket> tickets) {
+        super();
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

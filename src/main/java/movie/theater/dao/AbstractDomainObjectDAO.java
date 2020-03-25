@@ -7,10 +7,6 @@ import javax.annotation.Nonnull;
 import movie.theater.domain.DomainObject;
 import movie.theater.exception.BusinessException;
 
-/**
- * @param <T> DomainObject subclass
- * @author Yuriy_Tkach
- */
 public interface AbstractDomainObjectDAO<T extends DomainObject> {
 
     /**

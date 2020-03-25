@@ -10,9 +10,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-/**
- * @author Yuriy_Tkach
- */
 public interface EventDAO extends AbstractDomainObjectDAO<Event> {
 
     /**

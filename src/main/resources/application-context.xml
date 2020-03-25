@@ -52,4 +52,9 @@
         <property name="userService" ref="UserServiceImpl"/>
         <property name="discountService" ref="DiscountServiceImpl"/>
     </bean>
+
+    <!-- Operations -->
+    <bean id="UserOperations" class="movie.theater.operations.UserOperations"/>
+    <bean id="EventOperations" class="movie.theater.operations.EventOperations"/>
+
 </beans>

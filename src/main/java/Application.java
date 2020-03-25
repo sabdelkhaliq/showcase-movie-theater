@@ -1,16 +1,12 @@
+import movie.theater.domain.Event;
 import movie.theater.domain.User;
-import movie.theater.dao.UserDAO;
-import movie.theater.dao.UserDAOImpl;
-import movie.theater.service.UserService;
-import movie.theater.service.UserServiceImpl;
+import movie.theater.operations.EventOperations;
+import movie.theater.operations.UserOperations;
+import movie.theater.service.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Collection;
-import java.util.Scanner;
+import java.util.*;
 
 public class Application {
 
@@ -21,8 +17,14 @@ public class Application {
         System.out.println("4 - USER --> ADD/SAVE USER");
         System.out.println("5 - USER --> GET ALL USERS");
 
-        System.out.println("6 - EVENT --> GET NEXT EVENTS");
-        System.out.println("7 - EVENT --> GET FOR DATE RANGE");
+        System.out.println("6 - EVENT --> GET EVENT BY NAME");
+        System.out.println("7 - EVENT --> REMOVE EVENT");
+        System.out.println("8 - EVENT --> GET EVENT BY ID");
+        System.out.println("9 - EVENT --> ADD/SAVE EVENT");
+        System.out.println("10 - EVENT --> GET ALL EVENTS");
+
+        System.out.println("11 - EVENT --> GET NEXT EVENTS");
+        System.out.println("12 - EVENT --> GET FOR DATE RANGE");
 
         System.out.println("8 - DISCOUNT --> GET DISCOUNT");
 
@@ -38,10 +40,17 @@ public class Application {
 
     public static void main(String[] args) {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("application-context.xml");
+
         UserService userService = applicationContext.getBean(UserServiceImpl.class);
+        EventService eventService = applicationContext.getBean(EventServiceImpl.class);
+        AuditoriumService auditoriumService = applicationContext.getBean(AuditoriumServiceImpl.class);
+
+        EventOperations eventOperations = applicationContext.getBean(EventOperations.class);
+        UserOperations userOperations = applicationContext.getBean(UserOperations.class);
 
         Scanner input = new Scanner(System.in);
         User user;
+        Event event;
 
         System.out.println("--------------------- Movie Theater program ---------------------");
 
@@ -50,29 +59,47 @@ public class Application {
         while (!quitFlag) {
             showMenu();
             System.out.print("Enter choice [1-14]: ");
-            int choiceMainMenu = input.nextInt();
+            int choiceMainMenu = Integer.parseInt(input.nextLine());
+            ;
             switch (choiceMainMenu) {
                 case 1:
-                    user = getUserByEmail(userService, input);
-                    if (user != null)
-                        System.out.println(user);
-                    else
-                        System.out.println("User not found");
+                    user = userOperations.getUserByEmail(userService, input);
+                    System.out.println(user);
                     break;
                 case 2:
-                    user = getUserById(userService, input);
-                    userService.remove(user);
-                    System.out.println("User removed");
+                    userOperations.removeUser(userService, input);
                     break;
                 case 3:
-                    user = getUserById(userService, input);
+                    user = userOperations.getUserById(userService, input);
                     System.out.println(user);
                     break;
                 case 4:
-                    addUser(userService, input);
+                    userOperations.addUser(userService, input);
                     break;
                 case 5:
-                    printUsers(userService.getAll());
+                    userOperations.printUsers(userService.getAll());
+                    break;
+                case 6:
+                    event = eventOperations.getEventByName(eventService, input);
+                    break;
+                case 7:
+                    eventOperations.removeEvent(eventService, input);
+                    break;
+                case 8:
+                    event = eventOperations.getEventById(eventService, input);
+                    break;
+                case 9:
+                    eventOperations.addEvent(eventService, auditoriumService, input);
+                    break;
+                case 10:
+                    eventOperations.printEvents(eventService.getAll());
+                    break;
+                case 11:
+                    eventOperations.getNextEvents(eventService, input);
+                    break;
+                case 12:
+                    eventOperations.getEventsForDateRange(eventService, input);
+                    break;
                 case 14:
                     System.out.println("Thank you for using Movie Theater program");
                     quitFlag = true;
@@ -83,38 +110,5 @@ public class Application {
         }
     }
 
-    private static void printUsers(Collection<User> users) {
-        for (User user : users)
-            System.out.println(user);
-    }
-
-    private static User getUserById(UserService userService, Scanner input) {
-        try {
-            System.out.println("Enter user id: ");
-            Long id = input.nextLong();
-            return userService.getById(id);
-        } catch (RuntimeException r) {
-            return null;
-        }
-    }
-
-    private static User getUserByEmail(UserService userService, Scanner input) {
-        System.out.println("Enter user email: ");
-        String email = input.next();
-        return userService.getUserByEmail(email);
-    }
-
-    private static void addUser(UserService userService, Scanner input) {
-        System.out.println("Enter first name: ");
-        String firstName = input.next();
-        System.out.println("Enter last name: ");
-        String lastName = input.next();
-        System.out.println("Enter email: ");
-        String email = input.next();
-        System.out.println("Enter birthDate [ex: dd-MM-yyyy]: ");
-        String birthDate = input.next();
-        DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        userService.save(new User(firstName, lastName, email, LocalDate.parse(birthDate, FORMATTER), null));
-    }
 
 }
