@@ -6,9 +6,6 @@ import javax.annotation.Nullable;
 import movie.theater.domain.User;
 import movie.theater.exception.BusinessException;
 
-/**
- * @author Yuriy_Tkach
- */
 public interface UserDAO extends AbstractDomainObjectDAO<User> {
 
     /**

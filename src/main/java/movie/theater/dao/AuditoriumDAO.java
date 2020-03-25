@@ -8,9 +8,6 @@ import javax.annotation.Nullable;
 import movie.theater.domain.Auditorium;
 import movie.theater.exception.BusinessException;
 
-/**
- * @author Yuriy_Tkach
- */
 public interface AuditoriumDAO {
 
     /**

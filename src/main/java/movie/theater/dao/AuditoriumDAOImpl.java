@@ -17,6 +17,10 @@ public class AuditoriumDAOImpl implements AuditoriumDAO {
 
     public AuditoriumDAOImpl() throws FileNotFoundException {
         auditoriums = new HashMap<>();
+        Set<Long> vipSeats = new HashSet<>();
+        vipSeats.add(10L);
+        vipSeats.add(15L);
+        auditoriums.put(1, new Auditorium("Auditorium 1", 100, vipSeats));
     }
 
     @Nonnull

@@ -5,6 +5,8 @@ package movie.theater.domain;
  */
 public class DomainObject {
 
+    private static Long count = 0L;
+
     private Long id;
 
     public Long getId() {
@@ -15,4 +17,8 @@ public class DomainObject {
         this.id = id;
     }
 
+    public DomainObject() {
+        this.id = count;
+        count++;
+    }
 }

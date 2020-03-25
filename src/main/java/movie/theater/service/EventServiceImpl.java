@@ -5,7 +5,10 @@ import movie.theater.domain.Event;
 import movie.theater.exception.BusinessException;
 
 import javax.annotation.Nonnull;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Set;
 
 public class EventServiceImpl implements EventService {
     EventDAO eventDAO;
@@ -33,6 +36,18 @@ public class EventServiceImpl implements EventService {
     @Override
     public Collection<Event> getAll() throws BusinessException {
         return eventDAO.getAll();
+    }
+
+    @Nonnull
+    @Override
+    public Set<Event> getForDateRange(@Nonnull LocalDate from, @Nonnull LocalDate to) throws BusinessException {
+        return eventDAO.getForDateRange(from, to);
+    }
+
+    @Nonnull
+    @Override
+    public Set<Event> getNextEvents(@Nonnull LocalDateTime to) throws BusinessException {
+        return eventDAO.getNextEvents(to);
     }
 
     public EventDAO getEventDAO() {

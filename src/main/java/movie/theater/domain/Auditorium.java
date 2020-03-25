@@ -7,9 +7,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
-/**
- * @author Yuriy_Tkach
- */
 public class Auditorium {
 
     private String name;
@@ -18,14 +15,17 @@ public class Auditorium {
 
     private Set<Long> vipSeats = Collections.emptySet();
 
-    public Auditorium() {
+
+    public Auditorium(String name, long numberOfSeats, Set<Long> vipSeats) {
+        this.name = name;
+        this.numberOfSeats = numberOfSeats;
+        this.vipSeats = vipSeats;
     }
 
     /**
      * Counts how many vip seats are there in supplied <code>seats</code>
-     * 
-     * @param seats
-     *            Seats to process
+     *
+     * @param seats Seats to process
      * @return number of vip seats in request
      */
     public long countVipSeats(Collection<Long> seats) {
@@ -47,9 +47,9 @@ public class Auditorium {
     public void setNumberOfSeats(long numberOfSeats) {
         this.numberOfSeats = numberOfSeats;
     }
-    
+
     public Set<Long> getAllSeats() {
-        return LongStream.range(1, numberOfSeats+1).boxed().collect(Collectors.toSet());
+        return LongStream.range(1, numberOfSeats + 1).boxed().collect(Collectors.toSet());
     }
 
     public Set<Long> getVipSeats() {
@@ -87,4 +87,12 @@ public class Auditorium {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "Auditorium{" +
+                "name='" + name + '\'' +
+                ", numberOfSeats=" + numberOfSeats +
+                ", vipSeats=" + vipSeats +
+                '}';
+    }
 }
