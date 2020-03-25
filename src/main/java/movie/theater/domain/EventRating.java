@@ -1,5 +1,8 @@
 package movie.theater.domain;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 /**
  * @author Yuriy_Tkach
  */
@@ -16,5 +19,11 @@ public enum EventRating {
 
     EventRating(int value) {
         this.value = value;
+    }
+
+    public static Optional<EventRating> fromValue(int value) {
+        return Arrays.stream(values())
+                .filter(e -> e.value == value)
+                .findFirst();
     }
 }

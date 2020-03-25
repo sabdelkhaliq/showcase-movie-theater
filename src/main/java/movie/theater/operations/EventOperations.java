@@ -1,5 +1,6 @@
 package movie.theater.operations;
 
+import movie.theater.domain.Auditorium;
 import movie.theater.domain.Event;
 import movie.theater.domain.EventRating;
 import movie.theater.exception.BusinessException;
@@ -10,15 +11,21 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class EventOperations {
 
     final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     final DateTimeFormatter FORMATTER_TIMESTAMP = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
-    public void printEvents(Collection<Event> events) {
+    EventService eventService;
+    AuditoriumService auditoriumService;
+
+    public void printEvents() {
+        Collection<Event> events = eventService.getAll();
         if (events.isEmpty())
             System.out.println("No Events were found");
         else {
@@ -27,7 +34,7 @@ public class EventOperations {
         }
     }
 
-    public void addEvent(EventService eventService, AuditoriumService auditoriumService, Scanner input) {
+    public void addEvent(Scanner input) {
         Event event = new Event();
 
         System.out.println("Enter event name");
@@ -41,15 +48,7 @@ public class EventOperations {
         System.out.println("Enter event rating 1 for low 2 for mid 3 for high");
         int rating = Integer.parseInt(input.nextLine());
 
-
-        EventRating eventRating;
-        if (rating == 3)
-            eventRating = EventRating.HIGH;
-        else if (rating == 2)
-            eventRating = EventRating.MID;
-        else
-            eventRating = EventRating.LOW;
-
+        EventRating eventRating = EventRating.fromValue(rating).get();
         event.setRating(eventRating);
 
         char airDateCheck = 'y';
@@ -59,24 +58,35 @@ public class EventOperations {
             if (airDateCheck == 'y' || airDateCheck == 'Y') {
                 System.out.println("Enter air date timestamp [ex: dd-MM-yyyy HH:mi]: ");
                 String date = input.nextLine();
-                event.addAirDateTime(LocalDateTime.parse(date, FORMATTER_TIMESTAMP));
+
+                Set<Auditorium> auditoriums = auditoriumService.getAll();
+
+                System.out.println("Choose Auditorium [1-" + auditoriums.size() + "]");
+                List<Auditorium> auditoriumList = auditoriums.stream().collect(Collectors.toList());
+
+                for (int i = 0; i < auditoriumList.size(); i++) {
+                    System.out.println((i + 1) + " " + auditoriumList.get(i).toString());
+                }
+                int choice = Integer.parseInt(input.nextLine());
+                Auditorium auditorium = auditoriumList.get(choice);
+                event.addAirDateTime(LocalDateTime.parse(date, FORMATTER_TIMESTAMP), auditorium);
             }
         } while (airDateCheck == 'y');
 
         eventService.save(event);
-
+        System.out.println("Event saved and ready for booking");
     }
 
-    public void removeEvent(EventService eventService, Scanner input) {
+    public void removeEvent(Scanner input) {
         Event event;
-        event = getEventById(eventService, input);
+        event = getEventById(input);
         if (event != null) {
             eventService.remove(event);
             System.out.println("Event removed");
         }
     }
 
-    public Event getEventById(EventService eventService, Scanner input) {
+    public Event getEventById(Scanner input) {
         Event event = null;
         try {
             System.out.println("Enter event id: ");
@@ -88,7 +98,7 @@ public class EventOperations {
         return event;
     }
 
-    public Event getEventByName(EventService eventService, Scanner input) {
+    public Event getEventByName(Scanner input) {
         Event event = null;
         try {
             System.out.println("Enter event name: ");
@@ -100,7 +110,7 @@ public class EventOperations {
         return event;
     }
 
-    public void getEventsForDateRange(EventService eventService, Scanner input) {
+    public void getEventsForDateRange(Scanner input) {
         try {
             System.out.println("Enter from date [ex: dd-MM-yyyy]: ");
             String from = input.nextLine();
@@ -109,20 +119,20 @@ public class EventOperations {
 
             Set<Event> events = eventService.getForDateRange(LocalDate.parse(from, FORMATTER), LocalDate.parse(to, FORMATTER));
 
-            printEvents(events);
+            printEvents();
         } catch (BusinessException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void getNextEvents(EventService eventService, Scanner input) {
+    public void getNextEvents(Scanner input) {
         try {
             System.out.println("Enter date timestamp [ex: dd-MM-yyyy HH:mi]: ");
             String date = input.nextLine();
 
             Set<Event> events = eventService.getNextEvents(LocalDateTime.parse(date, FORMATTER_TIMESTAMP));
 
-            printEvents(events);
+            printEvents();
         } catch (BusinessException e) {
             System.out.println(e.getMessage());
         }

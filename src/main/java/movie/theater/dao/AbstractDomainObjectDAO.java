@@ -1,11 +1,10 @@
 package movie.theater.dao;
 
-import java.util.Collection;
-
-import javax.annotation.Nonnull;
-
 import movie.theater.domain.DomainObject;
 import movie.theater.exception.BusinessException;
+
+import javax.annotation.Nonnull;
+import java.util.List;
 
 public interface AbstractDomainObjectDAO<T extends DomainObject> {
 
@@ -38,5 +37,5 @@ public interface AbstractDomainObjectDAO<T extends DomainObject> {
      * @return collection of objects
      */
     public @Nonnull
-    Collection<T> getAll();
+    List<T> getAll();
 }

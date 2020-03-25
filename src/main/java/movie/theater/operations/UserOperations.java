@@ -14,23 +14,26 @@ public class UserOperations {
     final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     final DateTimeFormatter FORMATTER_TIMESTAMP = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
-    public void removeUser(UserService userService, Scanner input) {
+    UserService userService;
+
+    public void removeUser(Scanner input) {
         User user;
-        user = getUserById(userService, input);
+        user = getUserById(input);
         if (user != null) {
             userService.remove(user);
             System.out.println("User removed");
         }
     }
 
-    public void printUsers(Collection<User> users) {
+    public void printUsers() {
+        Collection<User> users = userService.getAll();
         if (users.isEmpty()) {
             System.out.println("No users were found");
         } else for (User user : users)
             System.out.println(user);
     }
 
-    public User getUserById(UserService userService, Scanner input) {
+    public User getUserById(Scanner input) {
         User user = null;
         try {
             System.out.println("Enter user id: ");
@@ -43,7 +46,7 @@ public class UserOperations {
         return user;
     }
 
-    public User getUserByEmail(UserService userService, Scanner input) {
+    public User getUserByEmail(Scanner input) {
         User user = null;
         try {
             System.out.println("Enter user email: ");
@@ -56,7 +59,7 @@ public class UserOperations {
         return user;
     }
 
-    public void addUser(UserService userService, Scanner input) {
+    public void addUser(Scanner input) {
         System.out.println("Enter first name: ");
         String firstName = input.nextLine();
         System.out.println("Enter last name: ");

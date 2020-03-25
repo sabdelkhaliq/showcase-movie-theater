@@ -4,13 +4,10 @@ import movie.theater.domain.Event;
 import movie.theater.exception.BusinessException;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public interface EventService {
 
@@ -22,7 +19,7 @@ public interface EventService {
 
     public Event getById(@Nonnull Long id) throws BusinessException;
 
-    public Collection<Event> getAll();
+    public List<Event> getAll();
 
     public @Nonnull
     Set<Event> getForDateRange(@Nonnull LocalDate from,

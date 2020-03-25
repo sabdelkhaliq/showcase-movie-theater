@@ -1,11 +1,13 @@
 package movie.theater.dao;
 
-import movie.theater.exception.BusinessException;
 import movie.theater.domain.User;
+import movie.theater.exception.BusinessException;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class UserDAOImpl implements UserDAO {
@@ -41,7 +43,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Nonnull
     @Override
-    public Collection<User> getAll() {
+    public List<User> getAll() {
         return users.values().stream().collect(Collectors.toCollection(ArrayList::new));
     }
 

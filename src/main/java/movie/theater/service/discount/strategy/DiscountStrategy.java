@@ -7,5 +7,5 @@ import java.time.LocalDateTime;
 
 public interface DiscountStrategy {
 
-    public double getDiscount(User user, LocalDateTime localDate, long numberOfTickets);
+    public double getDiscount(User user, LocalDateTime localDate);
 }

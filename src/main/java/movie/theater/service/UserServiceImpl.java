@@ -5,7 +5,7 @@ import movie.theater.domain.User;
 import movie.theater.exception.BusinessException;
 
 import javax.annotation.Nonnull;
-import java.util.Collection;
+import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Collection<User> getAll() {
+    public List<User> getAll() {
         return userDAO.getAll();
 
     }

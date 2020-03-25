@@ -4,10 +4,7 @@ import movie.theater.domain.User;
 import movie.theater.exception.BusinessException;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.stream.Collectors;
+import java.util.List;
 
 public interface UserService {
 
@@ -19,5 +16,5 @@ public interface UserService {
 
     public User getById(@Nonnull Long id) throws BusinessException;
 
-    public Collection<User> getAll();
+    public List<User> getAll();
 }

@@ -9,7 +9,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 public class BirthdayStrategy implements DiscountStrategy {
     @Override
-    public double getDiscount(User user, LocalDateTime localDate, long numberOfTickets) {
+    public double getDiscount(User user, LocalDateTime localDate) {
         if (user.getBirthdate() != null && DAYS.between(user.getBirthdate(), localDate) <= 5)
             return 5;
         else

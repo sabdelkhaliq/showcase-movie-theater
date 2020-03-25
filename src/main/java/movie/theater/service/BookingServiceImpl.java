@@ -17,9 +17,9 @@ public class BookingServiceImpl implements BookingService {
     UserService userService;
 
     @Override
-    public double getTicketsPrice(@Nonnull Event event, @Nonnull LocalDateTime dateTime, @Nullable User user, @Nonnull Set<Long> seats) {
-        double discount = discountService.getDiscount(user, event, dateTime, seats.size());
-        return discount * seats.size() * event.getBasePrice();
+    public double getTicketPrice(@Nonnull Event event, @Nonnull LocalDateTime dateTime, @Nullable User user, @Nonnull Long seat, boolean isVip) {
+        double discount = discountService.getDiscount(user, event, dateTime);
+        return (isVip) ? discount * event.getBasePrice() * 2 : discount * event.getBasePrice();
     }
 
     @Override
@@ -40,8 +40,10 @@ public class BookingServiceImpl implements BookingService {
         for (Ticket ticket : tickets) {
             User user = userService.getById(ticket.getUser().getId());
             NavigableSet<Ticket> userTickets = user.getTickets();
+
             if (userTickets == null)
                 userTickets = new TreeSet<>();
+
             userTickets.add(ticket);
             user.setTickets(userTickets);
             userService.save(user);

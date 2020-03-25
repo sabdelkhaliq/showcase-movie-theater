@@ -7,7 +7,7 @@ import movie.theater.exception.BusinessException;
 import javax.annotation.Nonnull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 public class EventServiceImpl implements EventService {
@@ -34,7 +34,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Collection<Event> getAll() throws BusinessException {
+    public List<Event> getAll() throws BusinessException {
         return eventDAO.getAll();
     }
 

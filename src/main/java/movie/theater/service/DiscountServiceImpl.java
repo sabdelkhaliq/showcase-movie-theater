@@ -12,9 +12,9 @@ import java.util.List;
 public class DiscountServiceImpl implements DiscountService {
     List<DiscountStrategy> discountStrategyList;
 
-    public double getDiscount(@Nullable User user, @Nonnull Event event, @Nonnull LocalDateTime airDateTime, long numberOfTickets) {
-        double birthdayTicketDiscount = discountStrategyList.get(0).getDiscount(user, airDateTime, numberOfTickets);
-        double tenthTicketDiscount = discountStrategyList.get(1).getDiscount(user, airDateTime, numberOfTickets);
+    public double getDiscount(@Nullable User user, @Nonnull Event event, @Nonnull LocalDateTime airDateTime) {
+        double birthdayTicketDiscount = discountStrategyList.get(0).getDiscount(user, airDateTime);
+        double tenthTicketDiscount = discountStrategyList.get(1).getDiscount(user, airDateTime);
         return (birthdayTicketDiscount > tenthTicketDiscount) ? birthdayTicketDiscount : tenthTicketDiscount;
     }
 

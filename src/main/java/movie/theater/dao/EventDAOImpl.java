@@ -1,7 +1,7 @@
 package movie.theater.dao;
 
-import movie.theater.exception.BusinessException;
 import movie.theater.domain.Event;
+import movie.theater.exception.BusinessException;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -65,7 +65,7 @@ public class EventDAOImpl implements EventDAO {
 
     @Nonnull
     @Override
-    public Collection<Event> getAll() {
+    public List<Event> getAll() {
         return events.values().stream().collect(Collectors.toCollection(ArrayList::new));
     }
 
