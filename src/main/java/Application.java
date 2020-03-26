@@ -3,7 +3,6 @@ import movie.theater.domain.User;
 import movie.theater.operations.BookingOperations;
 import movie.theater.operations.EventOperations;
 import movie.theater.operations.UserOperations;
-import movie.theater.service.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -51,18 +50,15 @@ public class Application {
             showMainMenu();
             System.out.print("Enter choice [1-14]: ");
             int choiceMainMenu = Integer.parseInt(input.nextLine());
-            ;
             switch (choiceMainMenu) {
                 case 1:
                     user = userOperations.getUserByEmail(input);
-                    System.out.println(user);
                     break;
                 case 2:
                     userOperations.removeUser(input);
                     break;
                 case 3:
                     user = userOperations.getUserById(input);
-                    System.out.println(user);
                     break;
                 case 4:
                     userOperations.addUser(input);
@@ -95,7 +91,7 @@ public class Application {
                     bookingOperations.book(input);
                     break;
                 case 14:
-                    bookingOperations.getPurcasheTicket(input);
+                    bookingOperations.getPurchasedTickets(input);
                 case 15:
                     System.out.println("Thank you for using Movie Theater program");
                     quitFlag = true;

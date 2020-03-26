@@ -85,6 +85,31 @@ public class BookingOperations {
         System.out.println("Done");
     }
 
-    public void getPurcasheTicket(Scanner input) {
+    public void getPurchasedTickets(Scanner input) {
+
+    }
+
+    public EventService getEventService() {
+        return eventService;
+    }
+
+    public void setEventService(EventService eventService) {
+        this.eventService = eventService;
+    }
+
+    public UserService getUserService() {
+        return userService;
+    }
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    public BookingService getBookingService() {
+        return bookingService;
+    }
+
+    public void setBookingService(BookingService bookingService) {
+        this.bookingService = bookingService;
     }
 }

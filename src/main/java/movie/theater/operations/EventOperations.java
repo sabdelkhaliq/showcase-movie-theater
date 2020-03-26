@@ -90,7 +90,7 @@ public class EventOperations {
         Event event = null;
         try {
             System.out.println("Enter event id: ");
-            Long id = input.nextLong();
+            Long id = Long.parseLong(input.nextLine());
             event = eventService.getById(id);
         } catch (BusinessException e) {
             System.out.println(e.getMessage());
@@ -136,5 +136,21 @@ public class EventOperations {
         } catch (BusinessException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public EventService getEventService() {
+        return eventService;
+    }
+
+    public void setEventService(EventService eventService) {
+        this.eventService = eventService;
+    }
+
+    public AuditoriumService getAuditoriumService() {
+        return auditoriumService;
+    }
+
+    public void setAuditoriumService(AuditoriumService auditoriumService) {
+        this.auditoriumService = auditoriumService;
     }
 }

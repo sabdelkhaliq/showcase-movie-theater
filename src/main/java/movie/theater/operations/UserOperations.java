@@ -37,9 +37,9 @@ public class UserOperations {
         User user = null;
         try {
             System.out.println("Enter user id: ");
-            Long id = input.nextLong();
+            Long id = Long.parseLong(input.nextLine());
             user = userService.getById(id);
-
+            System.out.println(user);
         } catch (BusinessException e) {
             System.out.println(e.getMessage());
         }
@@ -53,6 +53,7 @@ public class UserOperations {
             String email = input.nextLine();
             user = userService.getUserByEmail(email);
             System.out.println("User details: ");
+            System.out.println(user);
         } catch (BusinessException e) {
             System.out.println(e.getMessage());
         }
@@ -69,5 +70,13 @@ public class UserOperations {
         System.out.println("Enter birthDate [ex: dd-MM-yyyy]: ");
         String birthDate = input.nextLine();
         userService.save(new User(firstName, lastName, email, LocalDate.parse(birthDate, FORMATTER), null));
+    }
+
+    public UserService getUserService() {
+        return userService;
+    }
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 }
