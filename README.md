@@ -1,4 +1,4 @@
-# MyReads - Book Management System
+# Movie Theater System
 
 ## Description
 
